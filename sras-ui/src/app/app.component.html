@@ -1,0 +1,43 @@
+@if (isLoggedIn()) {
+<mat-toolbar color="primary">
+  <span class="brand">SRAS</span>
+  <span class="spacer"></span>
+
+  @if (!isManager()) {
+    <!-- Employee nav -->
+    <a mat-button routerLink="/employees" routerLinkActive="active-link">
+      <mat-icon>person</mat-icon> My Profile
+    </a>
+    <a mat-button routerLink="/ranking" routerLinkActive="active-link">
+      <mat-icon>leaderboard</mat-icon> Rankings
+    </a>
+  }
+
+  @if (isManager()) {
+    <!-- Manager nav -->
+    <a mat-button routerLink="/projects" routerLinkActive="active-link">
+      <mat-icon>folder</mat-icon> Projects
+    </a>
+    <a mat-button routerLink="/matching" routerLinkActive="active-link">
+      <mat-icon>auto_awesome</mat-icon> Matching
+    </a>
+    <a mat-button routerLink="/ranking" routerLinkActive="active-link">
+      <mat-icon>leaderboard</mat-icon> Rankings
+    </a>
+  }
+
+  <button mat-button [matMenuTriggerFor]="userMenu">
+    <mat-icon>account_circle</mat-icon> {{ userEmail() }}
+    <span class="role-badge">{{ isManager() ? 'Manager' : 'Employee' }}</span>
+  </button>
+  <mat-menu #userMenu="matMenu">
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon> Logout
+    </button>
+  </mat-menu>
+</mat-toolbar>
+}
+
+<main class="main-content">
+  <router-outlet />
+</main>
