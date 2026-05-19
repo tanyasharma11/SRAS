@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DecimalPipe } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -53,6 +54,8 @@ export class EmployeeFormComponent implements OnInit {
     certifications: this.fb.array([])
   });
 
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor(
     private fb: FormBuilder,
     private employeeService: EmployeeService,
@@ -65,7 +68,7 @@ export class EmployeeFormComponent implements OnInit {
     if (!userId) return;
     this.loading = true;
     // Try to load an existing profile linked to this user
-    this.employeeService.getAll().subscribe({
+    this.employeeService.getAll().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: employees => {
         this.loading = false;
         // Match on the employee whose user.id equals the logged-in userId

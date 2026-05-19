@@ -1,0 +1,66 @@
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Smart Resource Allocation System</div>
+
+    <h1 class="hero-title">
+      Put the right people<br>on the right projects
+    </h1>
+
+    <p class="hero-sub">
+      SRAS matches your talent pool to project requirements using skill, experience,
+      and availability — so your teams ship faster with less guesswork.
+    </p>
+
+    <div class="hero-actions">
+      <a mat-flat-button routerLink="/signup" class="btn-primary">
+        Get Started &nbsp;<mat-icon>arrow_forward</mat-icon>
+      </a>
+      <a mat-stroked-button routerLink="/login" class="btn-outline">
+        Sign In
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-graphic" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="card-mock">
+      <div class="mock-row"><span class="dot green"></span> Alice M. &nbsp;·&nbsp; <em>Senior · 92 pts</em></div>
+      <div class="mock-row"><span class="dot blue"></span>  Bob K.  &nbsp;·&nbsp; <em>Mid · 78 pts</em></div>
+      <div class="mock-row"><span class="dot amber"></span> Carol P. &nbsp;·&nbsp; <em>Lead · 85 pts</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FEATURES ── -->
+<section class="features">
+  <div class="features-inner">
+    <h2 class="section-label">What you get</h2>
+    <div class="feature-grid">
+      @for (f of features; track f.title) {
+        <div class="feature-card">
+          <span class="feature-icon">
+            <mat-icon>{{ f.icon }}</mat-icon>
+          </span>
+          <h3>{{ f.title }}</h3>
+          <p>{{ f.desc }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA STRIP ── -->
+<section class="cta-strip">
+  <h2>Ready to optimise your team?</h2>
+  <a mat-flat-button routerLink="/signup" class="btn-primary">
+    Create a free account
+  </a>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="site-footer">
+  <span class="footer-brand">SRAS</span>
+  <span class="footer-copy">Smart Resource Allocation System &mdash; &copy; 2026</span>
+</footer>

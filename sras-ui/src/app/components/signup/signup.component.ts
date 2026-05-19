@@ -8,8 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-signup',
@@ -42,7 +43,7 @@ export class SignupComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private toast: ToastService
   ) {}
 
   submit(): void {
@@ -51,12 +52,18 @@ export class SignupComponent {
     this.authService.signup(this.form.value as any).subscribe({
       next: (res) => {
         this.loading = false;
-        this.snackBar.open('Account created!', 'Close', { duration: 3000 });
+        this.toast.success('Account created! Welcome to SRAS.');
         this.router.navigate([res.role === 'PROJECT_MANAGER' ? '/projects' : '/employees']);
       },
       error: err => {
         this.loading = false;
-        this.snackBar.open(err.error?.message ?? 'Signup failed', 'Close', { duration: 3000 });
+        // Prefer the server's field-level validation errors, then the top-level
+        // message, then a safe fallback — never shows a raw technical string.
+        const fieldErrors = err.error?.errors as Record<string, string> | undefined;
+        const serverMsg  = fieldErrors
+          ? Object.values(fieldErrors).join(' · ')
+          : err.error?.message;
+        this.toast.error(serverMsg ?? 'Signup failed. Please try again.');
       }
     });
   }

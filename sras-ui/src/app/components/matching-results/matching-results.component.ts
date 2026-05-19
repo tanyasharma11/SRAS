@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
@@ -56,6 +57,8 @@ export class MatchingResultsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor(
     private fb: FormBuilder,
     private matchingService: MatchingService,
@@ -64,7 +67,7 @@ export class MatchingResultsComponent implements OnInit, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this.projectService.getAll().subscribe(p => this.projects = p);
+    this.projectService.getAll().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(p => this.projects = p);
   }
 
   ngAfterViewInit(): void {
@@ -78,7 +81,7 @@ export class MatchingResultsComponent implements OnInit, AfterViewInit {
     this.loading = true;
     this.searched = false;
 
-    this.matchingService.getTopK(projectId!, k!).subscribe({
+    this.matchingService.getTopK(projectId!, k!).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: results => {
         this.loading = false;
         this.searched = true;

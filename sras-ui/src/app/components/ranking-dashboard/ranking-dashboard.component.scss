@@ -1,7 +1,59 @@
+h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0 0 20px;
+}
+
+/* Profile incomplete banner */
+.profile-incomplete-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #EFF6FF;
+  border: 1px solid #BFDBFE;
+  border-left: 4px solid #3B82F6;
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+
+  .banner-icon {
+    color: #3B82F6;
+    font-size: 22px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+
+  strong { color: #1E3A8A; font-size: 15px; }
+
+  p {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: #374151;
+
+    a {
+      color: #4F46E5;
+      font-weight: 500;
+      text-decoration: none;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+.filter-area {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 1px 4px rgba(15,23,42,0.06);
+}
+
 .no-data {
   text-align: center;
-  padding: 24px;
-  color: #757575;
+  padding: 32px;
+  color: #64748B;
+  font-size: 14px;
 }
 
 table {

@@ -1,16 +1,27 @@
 <div class="page-container">
   <h2>Employee Ranking Dashboard</h2>
 
-  <div class="filter-row">
+  @if (!hasProfile && !isManagerUser) {
+    <div class="profile-incomplete-banner">
+      <mat-icon class="banner-icon">info_outline</mat-icon>
+      <div>
+        <strong>Profile incomplete</strong>
+        <p>Please <a routerLink="/employees">complete your profile</a> to view the full ranking dashboard.</p>
+      </div>
+    </div>
+  }
+
+  @if (hasProfile || isManagerUser) {
+    <div class="filter-row">
     <mat-form-field>
       <mat-label>Search employees</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Name, level, location…">
+      <input matInput [value]="searchValue" (keyup)="applyFilter($event)" placeholder="Name, level, location…">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>Filter by Level</mat-label>
-      <mat-select (selectionChange)="filterByLevel($event.value)">
+      <mat-select [value]="levelFilter" (selectionChange)="filterByLevel($event.value)">
         <mat-option value="">All</mat-option>
         <mat-option value="junior">Junior</mat-option>
         <mat-option value="mid">Mid</mat-option>
@@ -88,4 +99,5 @@
 
     <mat-paginator [pageSizeOptions]="[10, 25, 50]" showFirstLastButtons></mat-paginator>
   </div>
+  } <!-- end profile guard -->
 </div>

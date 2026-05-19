@@ -1,10 +1,20 @@
+h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0 0 4px;
+}
+
 .subtitle {
-  color: #757575;
+  color: #64748B;
   margin-bottom: 16px;
+  margin-top: 4px;
 }
 
 .search-card {
   max-width: 700px;
+  border-left: 4px solid #4F46E5 !important;
+  box-shadow: 0 2px 12px rgba(79,70,229,0.10) !important;
 }
 
 .search-form {
@@ -19,8 +29,9 @@
 
 .no-data {
   text-align: center;
-  padding: 24px;
-  color: #757575;
+  padding: 32px;
+  color: #64748b;
+  font-size: 14px;
 }
 
 table {

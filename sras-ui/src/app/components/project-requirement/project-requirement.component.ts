@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
@@ -65,6 +66,8 @@ export class ProjectRequirementComponent implements OnInit {
 
   projectColumns = ['projectName', 'domain', 'locations', 'actions'];
 
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor(
     private fb: FormBuilder,
     private projectService: ProjectService,
@@ -83,7 +86,7 @@ export class ProjectRequirementComponent implements OnInit {
   get reqCerts() { return this.reqForm.get('role.certificationsNeeded') as FormArray; }
 
   loadProjects(): void {
-    this.projectService.getAll().subscribe(data => this.projects = data);
+    this.projectService.getAll().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(data => this.projects = data);
   }
 
   addLocation(): void { this.locations.push(this.fb.control('')); }

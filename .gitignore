@@ -29,3 +29,6 @@ venv/
 *.swo
 .project
 .settings/
+
+# --- Angular Cache ---
+**/.angular/cache/

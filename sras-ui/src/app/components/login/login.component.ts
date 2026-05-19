@@ -7,8 +7,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -39,7 +40,7 @@ export class LoginComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private snackBar: MatSnackBar
+    private toast: ToastService
   ) {}
 
   submit(): void {
@@ -48,11 +49,12 @@ export class LoginComponent {
     this.authService.login(this.form.value as any).subscribe({
       next: (res) => {
         this.loading = false;
+        this.toast.success('Welcome back!');
         this.router.navigate([res.role === 'PROJECT_MANAGER' ? '/projects' : '/employees']);
       },
       error: err => {
         this.loading = false;
-        this.snackBar.open(err.error?.message ?? 'Login failed', 'Close', { duration: 3000 });
+        this.toast.error(err.error?.message ?? 'Login failed. Please check your credentials.');
       }
     });
   }
