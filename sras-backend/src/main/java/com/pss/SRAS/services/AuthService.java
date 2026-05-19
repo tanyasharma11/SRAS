@@ -41,6 +41,12 @@ public class AuthService {
         return new AuthResponse(token, user.getEmail(), user.getRole(), user.getId());
     }
 
+    public AuthResponse validateAndGetUser(String email, String token) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + email));
+        return new AuthResponse(token, user.getEmail(), user.getRole(), user.getId());
+    }
+
     public AuthResponse login(LoginRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
